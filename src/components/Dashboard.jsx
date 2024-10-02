@@ -8,6 +8,9 @@ import {
   Button,
   VStack,
   useToast,
+  Stack,
+  Container,
+  Image,
 } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
@@ -63,16 +66,18 @@ function Dashboard() {
       <VStack spacing={8}>
         <Heading>Recipe Dashboard</Heading>
         <form onSubmit={handleSearch} style={{ width: "100%" }}>
-          <SimpleGrid columns={[1, 1, 3]} spacing={4} width="100%">
-            <Input
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search for recipes..."
-            />
-            <Button type="submit" colorScheme="orange">
-              Search
-            </Button>
-          </SimpleGrid>
+          <Container maxWidth={{ md: "3xl" }} p={[1, 0]}>
+            <Stack spacing={4} width="100%">
+              <Input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search for recipes..."
+              />
+              <Button type="submit" colorScheme="orange">
+                Search
+              </Button>
+            </Stack>
+          </Container>
         </form>
         {isLoading ? (
           <Text>Loading recipes...</Text>
@@ -80,6 +85,7 @@ function Dashboard() {
           <SimpleGrid columns={[1, 2, 3]} spacing={10}>
             {data.meals.map((meal) => (
               <Box key={meal.idMeal} borderWidth={1} borderRadius="lg" p={4}>
+                <Image src={meal.strMealThumb} alt={meal.strMeal} />
                 <Heading size="md">{meal.strMeal}</Heading>
                 <Text mt={2}>{meal.strCategory}</Text>
               </Box>

@@ -12,6 +12,13 @@ import {
   Input,
   VStack,
   Flex,
+  Image,
+  HStack,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
+  AccordionPanel,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
@@ -30,19 +37,29 @@ export default function LandingPage() {
         <Stack
           as={Box}
           textAlign={"center"}
-          spacing={{ base: 8, md: 14 }}
-          py={{ base: 20, md: 36 }}
+          spacing={{ base: 8 }}
+          py={{ base: 20 }}
         >
-          <Heading
-            fontWeight={600}
-            fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
-            lineHeight={"110%"}
-          >
-            Welcome to <br />
-            <Text as={"span"} color={"brand.orange"}>
-              RecipeRadar
-            </Text>
-          </Heading>
+          <Box>
+            <HStack justifyContent="center">
+              <Image
+                src="/src/assets/logo.png"
+                alt="logo"
+                width={140}
+                height={108}
+              />
+            </HStack>
+            <Heading
+              fontWeight={600}
+              fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
+              lineHeight={"110%"}
+            >
+              Welcome to <br />
+              <Text as={"span"} color={"brand.orange"}>
+                RecipeRadar
+              </Text>
+            </Heading>
+          </Box>
           <Text color={"gray.500"}>
             Scan, Cook, Savor: Your Culinary Compass. Discover new recipes, cook
             with confidence, and join our vibrant culinary community.
@@ -50,7 +67,7 @@ export default function LandingPage() {
           <form onSubmit={handleSearch}>
             <Stack
               direction={"column"}
-              spacing={3}
+              spacing={5}
               align={"center"}
               alignSelf={"center"}
               position={"relative"}
@@ -73,6 +90,7 @@ export default function LandingPage() {
                 _hover={{
                   bg: "orange.500",
                 }}
+                textColor={"white"}
               >
                 Search Recipes
               </Button>
@@ -81,7 +99,7 @@ export default function LandingPage() {
         </Stack>
       </Container>
 
-      <Container maxW={"5xl"} mt={10}>
+      <Container maxW={"5xl"}>
         <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
           <Heading fontSize={"3xl"}>Discover, Cook, Share</Heading>
           <Text color={"gray.600"} fontSize={"xl"}>
@@ -91,7 +109,7 @@ export default function LandingPage() {
           </Text>
         </Stack>
 
-        <VStack spacing={2} mt={8} textAlign="center">
+        <Accordion defaultIndex={[0]} allowMultiple mt={5}>
           <Feature
             icon={<Icon as={Lightning} w={10} h={10} />}
             title={"Instant Recipe Search"}
@@ -113,7 +131,7 @@ export default function LandingPage() {
               "Share your culinary creations and get inspired by other food lovers."
             }
           />
-        </VStack>
+        </Accordion>
       </Container>
     </>
   );
@@ -121,20 +139,36 @@ export default function LandingPage() {
 
 const Feature = ({ title, text, icon }) => {
   return (
-    <Stack direction={"row"} align={"center"}>
-      <Flex
-        w={8}
-        h={8}
-        align={"center"}
-        justify={"center"}
-        rounded={"full"}
-        bg={useColorModeValue("brand.orange", "brand.deepBlue")}
-      >
-        {icon}
-      </Flex>
-      <Text fontWeight={600}>{title}</Text>
-      <Text color={"gray.600"}>{text}</Text>
-    </Stack>
+    // <Stack direction={"row"} align={"center"}>
+    //   <Flex
+    //     w={8}
+    //     h={8}
+    //     align={"center"}
+    //     justify={"center"}
+    //     rounded={"full"}
+    //     bg={useColorModeValue("brand.orange", "brand.deepBlue")}
+    //   >
+    //     {icon}
+    //   </Flex>
+    //   <Text fontWeight={600}>{title}</Text>
+    //   <Text color={"gray.600"}>{text}</Text>
+    // </Stack>
+    <AccordionItem>
+      <h2>
+        <AccordionButton
+          fontWeight={600}
+          _expanded={{ bg: "brand.orange", color: "white" }}
+        >
+          <Box as="span" flex="1" textAlign="left" w={"full"}>
+            {icon} {title}
+          </Box>
+          <AccordionIcon />
+        </AccordionButton>
+      </h2>
+      <AccordionPanel pb={4} color={"gray.600"}>
+        {text}
+      </AccordionPanel>
+    </AccordionItem>
   );
 };
 

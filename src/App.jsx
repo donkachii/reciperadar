@@ -16,6 +16,7 @@ import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
+import LoginForm from "./components/LoginForm";
 
 function App() {
   const theme = extendTheme({
@@ -44,6 +45,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/login" element={<LoginForm />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Router>
