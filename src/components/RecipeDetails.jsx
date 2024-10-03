@@ -43,15 +43,15 @@ const RecipeDetails = () => {
 
   const { data, isLoading, error } = useQuery(["recipe", id], fetchData);
 
-  useEffect(() => {
-    const storedFavorites = JSON.parse(
-      localStorage.getItem("favorites") || "[]"
-    );
-    if (!storedFavorites) {
-      return;
-    }
-    setIsFavorite(storedFavorites.some((fav) => fav.idMeal === id));
-  }, [id]);
+  // useEffect(() => {
+  //   const storedFavorites = JSON.parse(
+  //     localStorage.getItem("favorites") || "[]"
+  //   );
+  //   if (!storedFavorites) {
+  //     return;
+  //   }
+  //   setIsFavorite(storedFavorites.some((fav) => fav.idMeal === id));
+  // }, [id]);
 
   const handleFavorites = useCallback(() => {
     try {
