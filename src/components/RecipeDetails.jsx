@@ -47,6 +47,9 @@ const RecipeDetails = () => {
     const storedFavorites = JSON.parse(
       localStorage.getItem("favorites") || "[]"
     );
+    if (!storedFavorites) {
+      return;
+    }
     setIsFavorite(storedFavorites.some((fav) => fav.idMeal === id));
   }, [id]);
 
