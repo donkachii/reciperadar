@@ -1,19 +1,20 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { PROCESS } from "./src/utils";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCI3o-vJMdHh-cjee1v1EFlzUoQ5uFXhSA",
-  authDomain: "recipiradar.firebaseapp.com",
-  projectId: "recipiradar",
-  storageBucket: "recipiradar.appspot.com",
-  messagingSenderId: "614136437950",
-  appId: "1:614136437950:web:b04b8566a47f1427cb12ef",
-  measurementId: "G-043R8579X3",
+  apiKey: `${PROCESS.VITE_API_KEY}`,
+  authDomain: `${PROCESS.VITE_AUTH_DOMAIN}`,
+  projectId: `${PROCESS.VITE_PROJECT_ID}`,
+  storageBucket: `${PROCESS.VITE_STORAGE_BUCKET}`,
+  messagingSenderId: `${PROCESS.VITE_MESSAGING_SENDER_ID}`,
+  appId: `${PROCESS.VITE_APP_ID}`,
+  measurementId: `${PROCESS.VITE_MEASUREMENT_ID}`,
 };
 
 // Initialize Firebase
