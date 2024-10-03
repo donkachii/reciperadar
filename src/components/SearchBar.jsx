@@ -1,5 +1,5 @@
 import { Button, Container, Input, Stack } from "@chakra-ui/react";
-
+// Search Bar
 const SearchBar = ({ handleSearch, searchQuery, setSearchQuery }) => {
   return (
     <form onSubmit={handleSearch} style={{ width: "100%" }}>
