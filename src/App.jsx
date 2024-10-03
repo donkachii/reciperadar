@@ -11,9 +11,10 @@ import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
-import RecipeDetails from "./components/RecipeDetails";
+
 import Favorites from "./components/Favorites";
 import { PUBLISHABLE_KEY } from "./utils";
+import RecipeDetails from "./components/RecipeDetails";
 
 function App() {
   const theme = extendTheme({
