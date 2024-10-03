@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Flex,
@@ -17,6 +16,12 @@ import { Link } from "react-router-dom";
 import { IoCloseSharp, IoSunnySharp } from "react-icons/io5";
 import { FaMoon } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
 
 function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
@@ -76,7 +81,25 @@ function Navbar() {
           <Button onClick={toggleColorMode}>
             {colorMode === "light" ? <FaMoon /> : <IoSunnySharp />}
           </Button>
-          <Button
+
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <Button
+              display={{ base: "none", md: "inline-flex" }}
+              fontSize={"sm"}
+              fontWeight={600}
+              color={"white"}
+              bg={"brand.orange"}
+              _hover={{
+                bg: "orange.300",
+              }}
+            >
+              <SignInButton />
+            </Button>
+          </SignedOut>
+          {/* <Button
             as={Link}
             to="/login"
             fontSize={"sm"}
@@ -89,22 +112,7 @@ function Navbar() {
             }}
           >
             Sign In
-          </Button>
-          <Button
-            as={Link}
-            to="/signup"
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"brand.orange"}
-            href={"#"}
-            _hover={{
-              bg: "orange.300",
-            }}
-          >
-            Sign Up
-          </Button>
+          </Button> */}
         </Stack>
       </Flex>
 

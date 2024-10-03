@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
+    "@clerk/clerk-react": "^5.11.0",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "axios": "^1.7.7",
+    "firebase": "^10.14.0",
     "framer-motion": "^11.9.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

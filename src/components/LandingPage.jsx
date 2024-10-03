@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Heading,
@@ -10,8 +9,6 @@ import {
   useColorModeValue,
   createIcon,
   Input,
-  VStack,
-  Flex,
   Image,
   HStack,
   Accordion,
@@ -43,7 +40,7 @@ export default function LandingPage() {
           <Box>
             <HStack justifyContent="center">
               <Image
-                src="/src/assets/logo.png"
+                src="/assets/logo.png"
                 alt="logo"
                 width={140}
                 height={108}
@@ -109,7 +106,7 @@ export default function LandingPage() {
           </Text>
         </Stack>
 
-        <Accordion defaultIndex={[0]} allowMultiple mt={5}>
+        <Accordion defaultIndex={[0]} allowMultiple my={5}>
           <Feature
             icon={<Icon as={Lightning} w={10} h={10} />}
             title={"Instant Recipe Search"}
@@ -139,20 +136,6 @@ export default function LandingPage() {
 
 const Feature = ({ title, text, icon }) => {
   return (
-    // <Stack direction={"row"} align={"center"}>
-    //   <Flex
-    //     w={8}
-    //     h={8}
-    //     align={"center"}
-    //     justify={"center"}
-    //     rounded={"full"}
-    //     bg={useColorModeValue("brand.orange", "brand.deepBlue")}
-    //   >
-    //     {icon}
-    //   </Flex>
-    //   <Text fontWeight={600}>{title}</Text>
-    //   <Text color={"gray.600"}>{text}</Text>
-    // </Stack>
     <AccordionItem>
       <h2>
         <AccordionButton

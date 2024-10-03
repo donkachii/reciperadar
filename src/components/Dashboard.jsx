@@ -4,21 +4,17 @@ import {
   Heading,
   Text,
   SimpleGrid,
-  Input,
-  Button,
   VStack,
   useToast,
-  Stack,
-  Container,
-  Image,
 } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
+import SearchBar from "./SearchBar";
+import RecipeCard from "./RecipeCard";
+import { API_BASE_URL } from "../utils";
 
 const fetchRecipes = async (query) => {
-  const response = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
-  );
+  const response = await fetch(`${API_BASE_URL}/search.php?s=${query}`);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -40,15 +36,14 @@ function Dashboard() {
 
   const { data, isLoading, error } = useQuery(
     ["recipes", searchQuery],
-    () => fetchRecipes(searchQuery),
-    {
-      enabled: !!searchQuery,
-    }
+    () => fetchRecipes(searchQuery)
+    // {
+    //   enabled: !!searchQuery,
+    // }
   );
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // The query will automatically run due to the dependency array in useQuery
   };
 
   if (error) {
@@ -64,31 +59,18 @@ function Dashboard() {
   return (
     <Box p={8}>
       <VStack spacing={8}>
-        <Heading>Recipe Dashboard</Heading>
-        <form onSubmit={handleSearch} style={{ width: "100%" }}>
-          <Container maxWidth={{ md: "3xl" }} p={[1, 0]}>
-            <Stack spacing={4} width="100%">
-              <Input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search for recipes..."
-              />
-              <Button type="submit" colorScheme="orange">
-                Search
-              </Button>
-            </Stack>
-          </Container>
-        </form>
+        <Heading>All Recipes</Heading>
+        <SearchBar
+          handleSearch={handleSearch}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
         {isLoading ? (
           <Text>Loading recipes...</Text>
         ) : data?.meals ? (
           <SimpleGrid columns={[1, 2, 3]} spacing={10}>
             {data.meals.map((meal) => (
-              <Box key={meal.idMeal} borderWidth={1} borderRadius="lg" p={4}>
-                <Image src={meal.strMealThumb} alt={meal.strMeal} />
-                <Heading size="md">{meal.strMeal}</Heading>
-                <Text mt={2}>{meal.strCategory}</Text>
-              </Box>
+              <RecipeCard key={meal.mealId} meal={meal} />
             ))}
           </SimpleGrid>
         ) : (

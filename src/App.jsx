@@ -1,10 +1,5 @@
-import {
-  Box,
-  ChakraProvider,
-  ColorModeScript,
-  Container,
-  extendTheme,
-} from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript, extendTheme } from "@chakra-ui/react";
+import { ClerkProvider } from "@clerk/clerk-react";
 import {
   BrowserRouter as Router,
   Route,
@@ -16,7 +11,9 @@ import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
-import LoginForm from "./components/LoginForm";
+import RecipeDetails from "./components/RecipeDetails";
+import Favorites from "./components/Favorites";
+import { PUBLISHABLE_KEY } from "./utils";
 
 function App() {
   const theme = extendTheme({
@@ -36,20 +33,27 @@ function App() {
 
   const queryClient = new QueryClient();
 
+  if (!PUBLISHABLE_KEY) {
+    throw new Error("Missing Publishable Key");
+  }
+
   return (
     <ChakraProvider theme={theme}>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <QueryClientProvider client={queryClient}>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </Router>
-      </QueryClientProvider>
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        <QueryClientProvider client={queryClient}>
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/recipe/:id" element={<RecipeDetails />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Router>
+        </QueryClientProvider>
+      </ClerkProvider>
     </ChakraProvider>
   );
 }
