@@ -18,6 +18,7 @@ import {
   AccordionPanel,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import Logo from "../assets/logo.png";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -39,12 +40,7 @@ export default function LandingPage() {
         >
           <Box>
             <HStack justifyContent="center">
-              <Image
-                src="/assets/logo.png"
-                alt="logo"
-                width={140}
-                height={108}
-              />
+              <Image src={Logo} alt="logo" width={140} height={108} />
             </HStack>
             <Heading
               fontWeight={600}
