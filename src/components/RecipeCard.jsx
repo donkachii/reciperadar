@@ -1,10 +1,11 @@
 import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
 
-const RecipeCard = ({ meal }) => {
+const RecipeCard = ({ meal, key }) => {
   return (
     <Box
       borderWidth={1}
       borderRadius="lg"
+      key={key}
       p={4}
       _hover={{
         cursor: "pointer",

@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 import {
   Box,
   Container,
@@ -16,6 +17,7 @@ import {
   OrderedList,
   Skeleton,
   Tag,
+  Text,
   useColorModeValue,
   useToast,
   VStack,
@@ -23,15 +25,23 @@ import {
 import { FaCheckCircle } from "react-icons/fa";
 import { MdOutlineFavorite } from "react-icons/md";
 import { API_BASE_URL } from "../utils";
-import axios from "axios";
 
 const RecipeDetails = () => {
   const { id } = useParams();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [recipe, setRecipe] = useState();
   const bgColor = useColorModeValue("white", "gray.800");
 
   const toast = useToast();
+
+  const fetchData = useCallback(async () => {
+    const response = await fetch(`${API_BASE_URL}/lookup.php?i=${id}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  }, [id]);
+
+  const { data, isLoading, error } = useQuery(["recipe", id], fetchData);
 
   useEffect(() => {
     const storedFavorites = JSON.parse(
@@ -43,25 +53,12 @@ const RecipeDetails = () => {
     setIsFavorite(storedFavorites.some((fav) => fav.idMeal === id));
   }, [id]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/lookup.php?i=${id}`);
-        setRecipe(response.data.meals[0]);
-      } catch (e) {
-        console.log("Encoutered an Error: ", e);
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
   const handleFavorites = useCallback(() => {
     try {
       const storedFavorites = JSON.parse(
         localStorage.getItem("favorites") || "[]"
       );
-      const meal = recipe;
+      const meal = data?.meals[0];
 
       if (!meal) {
         throw new Error("Meal data not available");
@@ -102,9 +99,9 @@ const RecipeDetails = () => {
         isClosable: true,
       });
     }
-  }, [recipe, toast]);
+  }, [data, toast]);
 
-  if (!recipe) {
+  if (isLoading) {
     return (
       <Container maxW="4xl" py={8}>
         <VStack spacing={4} align="stretch">
@@ -116,13 +113,15 @@ const RecipeDetails = () => {
     );
   }
 
-  // if (error) {
-  //   return <Text>An error occurred: {error.message}</Text>;
-  // }
+  if (error) {
+    return <Text>An error occurred: {error.message}</Text>;
+  }
 
-  // if (!recipe) {
-  //   return <Text>Recipe not found.</Text>;
-  // }
+  const recipe = data?.meals[0];
+
+  if (!recipe) {
+    return <Text>Recipe not found.</Text>;
+  }
 
   const ingredients = Object.entries(recipe)
     .filter(([key, value]) => key.startsWith("strIngredient") && value)

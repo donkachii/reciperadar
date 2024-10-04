@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import { ChakraProvider, ColorModeScript, extendTheme } from "@chakra-ui/react";
 import { ClerkProvider } from "@clerk/clerk-react";
 import {
@@ -10,11 +11,11 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
 import "./App.css";
-import Dashboard from "./components/Dashboard";
+// import Dashboard from "./components/Dashboard";
 
 import Favorites from "./components/Favorites";
 import { PUBLISHABLE_KEY } from "./utils";
-import RecipeDetails from "./components/RecipeDetails";
+// import RecipeDetails from "./components/RecipeDetails";
 
 function App() {
   const theme = extendTheme({
@@ -38,21 +39,27 @@ function App() {
     throw new Error("Missing Publishable Key");
   }
 
+  const RecipeDetails = React.lazy(() => import("./components/RecipeDetails"));
+  const Dashboard = React.lazy(() => import("./components/Dashboard"));
+  const Favorites = React.lazy(() => import("./components/Favorites"));
+
   return (
     <ChakraProvider theme={theme}>
       <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <QueryClientProvider client={queryClient}>
-          <Router>
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/recipe/:id" element={<RecipeDetails />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </Router>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Router>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/recipe/:id" element={<RecipeDetails />} />
+                <Route path="/favorites" element={<Favorites />} />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </Router>
+          </Suspense>
         </QueryClientProvider>
       </ClerkProvider>
     </ChakraProvider>
