@@ -11,11 +11,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
 import "./App.css";
-// import Dashboard from "./components/Dashboard";
 
-import Favorites from "./components/Favorites";
 import { PUBLISHABLE_KEY } from "./utils";
-// import RecipeDetails from "./components/RecipeDetails";
 
 function App() {
   const theme = extendTheme({
@@ -48,7 +45,9 @@ function App() {
       <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <QueryClientProvider client={queryClient}>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={<div style={{ textAlign: "center" }}>Loading...</div>}
+          >
             <Router>
               <Navbar />
               <Routes>
