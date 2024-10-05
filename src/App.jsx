@@ -57,6 +57,7 @@ function App() {
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
+              {/* TODO: Add error page and Footer */}
             </Router>
           </Suspense>
         </QueryClientProvider>
